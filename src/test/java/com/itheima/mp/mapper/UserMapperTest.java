@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+// MyBatisPlus 测试
 @SpringBootTest
 class UserMapperTest {
 
@@ -25,7 +26,9 @@ class UserMapperTest {
         user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
-        userMapper.saveUser(user);
+        //userMapper.saveUser(user);
+        //使用MyBatisPlus
+        userMapper.insert(user);
     }
 
     @Test
