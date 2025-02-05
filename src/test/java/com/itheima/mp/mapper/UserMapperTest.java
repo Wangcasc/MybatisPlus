@@ -1,5 +1,6 @@
 package com.itheima.mp.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itheima.mp.domain.po.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,43 @@ class UserMapperTest {
     @Test
     void testDeleteUser() {
         userMapper.deleteUser(5L);
+    }
+
+
+
+    //案例
+    @Test
+    void testSelectByQueryWrapper() {
+        //创建条件构造器
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        //设置条件 from不用写
+        wrapper.select("id", "username", "info")
+                .like("username", "o")
+                .ge("balance", 1000);
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+
+    }
+
+    @Test
+    void testUpdateByQueryWrapper() {
+        //设置要更新的数据
+        User user = new User();
+        user.setBalance(10000);
+        //创建条件构造器
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        //设置条件 from不用写
+        wrapper.eq("username", "Jack");
+        userMapper.update(user, wrapper);
+        //查询是否更新成功
+        QueryWrapper<User> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("username", "Jack");
+        User user1 = userMapper.selectOne(wrapper1);
+        System.out.println(user1);
+    }
+
+    @Test
+    void testUpdateWrapper() {
+
     }
 }
