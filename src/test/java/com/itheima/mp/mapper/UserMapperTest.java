@@ -1,6 +1,7 @@
 package com.itheima.mp.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.itheima.mp.domain.po.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,16 @@ class UserMapperTest {
 
     @Test
     void testUpdateWrapper() {
+
+        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+        //wrapper.in("id", 1, 2, 3, 4)
+        //        .setSql("balance = balance + 1000");
+        //userMapper.update(null, wrapper);
+
+        //或者使用集合
+        wrapper.in("id", List.of(1, 2, 3, 4))
+                .setSql("balance = balance + 1000");
+        userMapper.update(null, wrapper);
 
     }
 }
