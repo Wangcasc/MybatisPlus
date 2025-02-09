@@ -18,4 +18,6 @@ public interface UserMapper extends BaseMapper<User> {
     User queryUserById(@Param("id") Long id);
 
     List<User> queryUserByIds(@Param("ids") List<Long> ids);
+
+    //void deductionBalance(Long id, Integer money);
 }

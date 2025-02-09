@@ -2,6 +2,7 @@ package com.itheima.mp.controller;
 
 import com.itheima.mp.domain.dto.UserFormDTO;
 import com.itheima.mp.domain.po.User;
+import com.itheima.mp.domain.vo.UserVO;
 import com.itheima.mp.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,10 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Api(tags = "用户管理")
 @RestController
@@ -41,4 +42,59 @@ public class UserController {
 
 
     }
+
+    @ApiOperation("删除用户接口")
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        // 删除用户
+        userService.removeById(id);
+    }
+
+    @ApiOperation("根据ID查询用户接口")
+    @GetMapping("/{id}")
+    public UserVO getUserById(@PathVariable Long id) {
+        // 根据ID查询用户
+        User user = userService.getById(id);
+        //po对象转换为vo对象
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        return userVO;
+    }
+
+    @ApiOperation("根据ID批量查询用户接口")
+    @GetMapping
+    public List<UserVO> listUsersByIds(@RequestParam List<Long> ids) {
+        // 根据ID批量查询用户
+        List<User> users = userService.listByIds(ids);
+        //po对象转换为vo对象
+        List<UserVO> userVOList = new ArrayList<>();
+        for (User user : users) {
+            UserVO userVO = new UserVO();
+            BeanUtils.copyProperties(user, userVO);
+            userVOList.add(userVO);
+        }
+        return userVOList;
+    }
+
+    @ApiOperation("根据ID扣减用户余额")
+    @PutMapping("/{id}/deduction/{money}")
+    public void deductionBalance(@PathVariable Long id, @PathVariable Integer money) {
+        //// 根据ID查询用户
+        //User user = userService.getById(id);
+        //// 判断用户是否存在 如果存在，还需要判断状态是否正常 如果正常，还需要判断余额是否充足
+        //if (user != null && user.getStatus() == 1 && user.getBalance() >= money) {
+        //    // 扣减用户余额
+        //    user.setBalance(user.getBalance() - money);
+        //    // 更新用户
+        //    userService.updateById(user);
+        //}
+        //else {
+        //    throw new RuntimeException("用户不存在或状态异常或余额不足");
+        //}
+
+        //需要遵循数据库业务逻辑在Mapper层实现
+        userService.deductionBalance(id, money);
+    }
+
+
 }
