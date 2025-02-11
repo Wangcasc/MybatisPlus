@@ -1,6 +1,7 @@
 package com.itheima.mp.controller;
 
 import com.itheima.mp.domain.dto.UserFormDTO;
+import com.itheima.mp.domain.dto.UserQueryDTO;
 import com.itheima.mp.domain.po.User;
 import com.itheima.mp.domain.vo.UserVO;
 import com.itheima.mp.service.UserService;
@@ -94,6 +95,15 @@ public class UserController {
 
         //需要遵循数据库业务逻辑在Mapper层实现
         userService.deductionBalance(id, money);
+    }
+
+
+    @ApiOperation("根据复杂条件查询用户")
+    @GetMapping("/list")
+    public List<UserVO> listUsersByComplexCondition(UserQueryDTO userQueryDTO) {
+        // 根据复杂条件查询用户
+        List<UserVO> userVOList = userService.listUsersByComplexCondition(userQueryDTO);
+        return userVOList;
     }
 
 
