@@ -69,12 +69,10 @@ class UserServiceTest {
         long end = System.currentTimeMillis();
         System.out.println("for循环保存1000条数据耗时：" + (end - start) + "ms");
 
-        // 再用saveBatch保存1000条数据
+        // 再用saveBatch保存1000条数据 每10个数据为一个批次 保存一次
         // 开始时间
         start = System.currentTimeMillis();
-        userService.saveBatch(List.of(createUser(1001), createUser(1002), createUser(1003)));
-        // 结束时间
-        end = System.currentTimeMillis();
-        System.out.println("saveBatch保存1000条数据耗时：" + (end - start) + "ms");
+
+
     }
 }
