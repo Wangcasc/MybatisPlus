@@ -2,8 +2,11 @@ package com.itheima.mp.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.itheima.mp.domain.dto.Address;
 import com.itheima.mp.domain.dto.UserQueryDTO;
 import com.itheima.mp.domain.po.User;
+import com.itheima.mp.domain.vo.AddressVO;
 import com.itheima.mp.domain.vo.UserVO;
 import com.itheima.mp.mapper.UserMapper;
 import com.itheima.mp.service.UserService;
@@ -78,6 +81,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         for (User user : users) {
             UserVO userVO = new UserVO();
             BeanUtils.copyProperties(user, userVO);
+            userVOList.add(userVO);
+        }
+        return userVOList;
+    }
+
+    @Override
+    public UserVO queryUserAndAddressById(Long id) {
+        // 根据ID查询用户
+        User user = this.getById(id);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        // 查询用户的地址列表
+        List<Address> addressList = Db.lambdaQuery(Address.class)
+                .eq(Address::getUserId, id)
+                .list();
+        //po对象转换为vo对象
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        if (addressList != null && !addressList.isEmpty()) {
+            List<AddressVO> addressVOList = new ArrayList<>();
+            for (Address address : addressList) {
+                AddressVO addressVO = new AddressVO();
+                BeanUtils.copyProperties(address, addressVO);
+                addressVOList.add(addressVO);
+            }
+            userVO.setAddressList(addressVOList);
+        }
+
+        return userVO;
+    }
+
+    @Override
+    public List<UserVO> queryUserAndAddressByIds(List<Long> ids) {
+        // 根据ID批量查询用户
+        List<User> users = this.listByIds(ids);
+        if (users == null || users.isEmpty()) {
+            throw new RuntimeException("用户不存在");
+        }
+        // po对象转换为vo对象
+        List<UserVO> userVOList = new ArrayList<>();
+        for (User user : users) {
+            UserVO userVO = new UserVO();
+            BeanUtils.copyProperties(user, userVO);
+            // 查询用户的地址列表
+            List<Address> addressList = Db.lambdaQuery(Address.class)
+                    .eq(Address::getUserId, user.getId())
+                    .list();
+            if (addressList != null && !addressList.isEmpty()) {
+                List<AddressVO> addressVOList = new ArrayList<>();
+                for (Address address : addressList) {
+                    AddressVO addressVO = new AddressVO();
+                    BeanUtils.copyProperties(address, addressVO);
+                    addressVOList.add(addressVO);
+                }
+                userVO.setAddressList(addressVOList);
+            }
             userVOList.add(userVO);
         }
         return userVOList;

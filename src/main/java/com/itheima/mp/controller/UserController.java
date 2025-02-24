@@ -55,26 +55,30 @@ public class UserController {
     @GetMapping("/{id}")
     public UserVO getUserById(@PathVariable Long id) {
         // 根据ID查询用户
-        User user = userService.getById(id);
-        //po对象转换为vo对象
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        return userVO;
+        //User user = userService.getById(id);
+        ////po对象转换为vo对象
+        //UserVO userVO = new UserVO();
+        //BeanUtils.copyProperties(user, userVO);
+        //return userVO;
+
+        return userService.queryUserAndAddressById(id);
     }
 
     @ApiOperation("根据ID批量查询用户接口")
     @GetMapping
     public List<UserVO> listUsersByIds(@RequestParam List<Long> ids) {
-        // 根据ID批量查询用户
-        List<User> users = userService.listByIds(ids);
-        //po对象转换为vo对象
-        List<UserVO> userVOList = new ArrayList<>();
-        for (User user : users) {
-            UserVO userVO = new UserVO();
-            BeanUtils.copyProperties(user, userVO);
-            userVOList.add(userVO);
-        }
-        return userVOList;
+        //// 根据ID批量查询用户
+        //List<User> users = userService.listByIds(ids);
+        ////po对象转换为vo对象
+        //List<UserVO> userVOList = new ArrayList<>();
+        //for (User user : users) {
+        //    UserVO userVO = new UserVO();
+        //    BeanUtils.copyProperties(user, userVO);
+        //    userVOList.add(userVO);
+        //}
+        //return userVOList;
+
+        return userService.queryUserAndAddressByIds(ids);
     }
 
     @ApiOperation("根据ID扣减用户余额")

@@ -12,5 +12,9 @@ public interface UserService extends IService<User> {
     void deductionBalance(Long id, Integer money);
 
     List<UserVO> listUsersByComplexCondition(UserQueryDTO userQueryDTO);
+
+    UserVO queryUserAndAddressById(Long id);
+
+    List<UserVO> queryUserAndAddressByIds(List<Long> ids);
     //继承MP官方提供的IService接口
 }
