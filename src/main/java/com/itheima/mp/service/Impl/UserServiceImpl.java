@@ -8,6 +8,7 @@ import com.itheima.mp.domain.dto.UserQueryDTO;
 import com.itheima.mp.domain.po.User;
 import com.itheima.mp.domain.vo.AddressVO;
 import com.itheima.mp.domain.vo.UserVO;
+import com.itheima.mp.enums.UserStatus;
 import com.itheima.mp.mapper.UserMapper;
 import com.itheima.mp.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -30,7 +31,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //// 根据ID查询用户 直接自己调用自己的方法 继承自ServiceImpl中的方法
         User user = this.getById(id);
         // 判断用户是否存在 如果存在，还需要判断状态是否正常 如果正常，还需要判断余额是否充足
-        if (user != null && user.getStatus() == 1 && user.getBalance() >= money) {
+        if (user != null && user.getStatus() == UserStatus.NORMAL && user.getBalance() >= money) {
             // 扣减用户余额
             //user.setBalance(user.getBalance() - money);
             // 更新用户
@@ -39,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //使用lamdaUpdate方法
             boolean update = this.lambdaUpdate()
                     .set(User::getBalance, user.getBalance() - money) //跟新余额
-                    .eq(user.getBalance()-money==0, User::getStatus, 2) //余额为0，状态改为2
+                    .eq(user.getBalance()-money==0, User::getStatus, UserStatus.FROZEN) //余额为0，状态改为2 这里使用MP的枚举类转换
                     .eq( User::getId, id)
                     .eq( User::getBalance, user.getBalance()) //乐观锁 防止并发
                     .update();
