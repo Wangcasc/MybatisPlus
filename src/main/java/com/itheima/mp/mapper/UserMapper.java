@@ -9,7 +9,7 @@ import java.util.List;
 // MyBatis 方式实现
 public interface UserMapper extends BaseMapper<User> {
 
-    void saveUser(User user);
+    //void saveUser(User user);
 
     void deleteUser(Long id);
 
