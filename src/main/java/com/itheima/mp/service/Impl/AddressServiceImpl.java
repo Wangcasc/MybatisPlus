@@ -1,6 +1,6 @@
 package com.itheima.mp.service.impl;
 
-import com.itheima.mp.domain.dto.Address;
+import com.itheima.mp.domain.po.Address;
 import com.itheima.mp.mapper.AddressMapper;
 import com.itheima.mp.service.IAddressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -1,6 +1,6 @@
 package com.itheima.mp.service;
 
-import com.itheima.mp.domain.dto.Address;
+import com.itheima.mp.domain.po.Address;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

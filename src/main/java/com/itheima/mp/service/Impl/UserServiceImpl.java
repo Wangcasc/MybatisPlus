@@ -1,9 +1,8 @@
 package com.itheima.mp.service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.itheima.mp.domain.dto.Address;
+import com.itheima.mp.domain.po.Address;
 import com.itheima.mp.domain.dto.UserQueryDTO;
 import com.itheima.mp.domain.po.User;
 import com.itheima.mp.domain.vo.AddressVO;
