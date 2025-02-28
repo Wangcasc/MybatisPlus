@@ -21,4 +21,12 @@
     + IService基本API
     + ServiceImpl基本API
     + Lambda查询
-    + 
+    + 批量新增
+    + 拓展插件
+      + 代码自动生成
+      + DB静态工具
+      + 逻辑删除
+      + 枚举处理器
+      + JSON处理器
+      + MP分页插件
+      + 
