@@ -37,8 +37,7 @@ public class PageQueryDTO {
     public <T> Page<T> toMpPage(String defaultSortBy, boolean isAsc){
         return this.toMpPage(new OrderItem(defaultSortBy, isAsc));
     }
-
-
+    // 以下两个方法是为了方便使用，提供默认排序字段和排序方式
     public <T> Page<T> toMpPageDefaultSortByCreateTimeDesc() {
         return toMpPage("create_time", false);
     }
