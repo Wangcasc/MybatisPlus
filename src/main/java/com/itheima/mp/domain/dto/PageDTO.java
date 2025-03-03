@@ -56,7 +56,6 @@ public class PageDTO<V> {
         // 3.封装返回
         return new PageDTO<>(p.getTotal(), p.getPages(), vos);
     }
-
     /**
      * 将MybatisPlus分页结果转为 VO分页结果，允许用户自定义PO到VO的转换方式 (函数式编程) 方便用户自定义转换逻辑
      * @param p MybatisPlus的分页结果
