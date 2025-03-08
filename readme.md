@@ -41,5 +41,4 @@
   + docker-compose
     + 背景-虚拟机
     + CentOS7
-+ 微服务
-  + 
+
